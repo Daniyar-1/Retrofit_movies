@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+
 import com.example.retrofit_movies.R;
 import com.example.retrofit_movies.adapters.FilmAdapter;
 import com.example.retrofit_movies.data.FilmsStorage;
@@ -15,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private FilmAdapter filmAdapter;
+    private ProgressBar progressBar;
     private final String FILM_ID = "id";
 
     @Override
@@ -22,10 +26,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.rv_film);
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
+
 
         FilmsStorage.getAllFilms(new FilmsStorage.AllFilmsResult() {
             @Override
             public void onSuccess(List<FilmModel> films) {
+                progressBar.setVisibility(View.GONE);
                 filmAdapter.setFilmList(films);
             }
 

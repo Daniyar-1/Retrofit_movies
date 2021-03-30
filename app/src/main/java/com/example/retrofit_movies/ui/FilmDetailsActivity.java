@@ -1,8 +1,11 @@
 package com.example.retrofit_movies.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
+
 import com.example.retrofit_movies.data.FilmsStorage;
 import com.example.retrofit_movies.databinding.ActivityFilmDetailsBinding;
 import com.example.retrofit_movies.models.FilmModel;
@@ -10,6 +13,7 @@ import com.example.retrofit_movies.models.FilmModel;
 
 public class FilmDetailsActivity extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private ActivityFilmDetailsBinding binding;
     private final String FILM_ID = "id";
 
@@ -18,6 +22,8 @@ public class FilmDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFilmDetailsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        binding.progress.setVisibility(View.VISIBLE);
+
         setContentView(view);
         loadInfo(getIntent().getStringExtra(FILM_ID));
     }
@@ -26,6 +32,8 @@ public class FilmDetailsActivity extends AppCompatActivity {
         FilmsStorage.getFilmById(id, new FilmsStorage.Result() {
             @Override
             public void onSuccess(FilmModel film) {
+                binding.progress.setVisibility(View.GONE);
+                binding.linearTv.setVisibility(View.VISIBLE);
                 setFilmInfo(film);
             }
 

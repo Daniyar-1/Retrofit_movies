@@ -52,6 +52,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
             super(itemView);
             tvFilmTitle = itemView.findViewById(R.id.tv_film);
         }
+        
 
         public void bind(FilmModel filmModel) {
             tvFilmTitle.setText(filmModel.getTitle());
